@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
     const messageDiv = document.getElementById('message');
     const searchInput = document.getElementById('search');
+    const searchButton = document.getElementById('searchButton');
 
     loadPosts();
 
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('dark-mode');
     });
 
-    searchInput.addEventListener('input', () => {
+    searchButton.addEventListener('click', () => {
         const searchQuery = searchInput.value.toLowerCase();
         const posts = document.querySelectorAll('.post');
         posts.forEach(post => {
@@ -79,4 +80,3 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.className = type;
     }
 });
-
