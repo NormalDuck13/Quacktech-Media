@@ -58,4 +58,6 @@ button:hover {
 .post img, .post video {
     max-width: 100%;
     border-radius: 5px;
+    cursor: pointer;
 }
+
