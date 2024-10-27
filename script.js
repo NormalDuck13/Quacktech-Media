@@ -14,20 +14,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const title = document.getElementById('title').value;
         const name = document.getElementById('name').value;
-        const media = document.getElementById('media').value;
+        const mediaFile = document.getElementById('media').files[0];
 
-        const post = {
-            title,
-            name,
-            media
-        };
+        let mediaURL = '';
+        if (mediaFile) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                mediaURL = e.target.result;
 
-        try {
-            savePost(post);
-            addPostToDOM(post);
-            showMessage('Posted Successfully!', 'success');
-        } catch (error) {
-            showMessage('Couldn\'t save your post.', 'error');
+                const post = {
+                    title,
+                    name,
+                    mediaURL
+                };
+
+                try {
+                    savePost(post);
+                    addPostToDOM(post);
+                    showMessage('Posted Successfully!', 'success');
+                } catch (error) {
+                    showMessage('Couldn\'t save your post.', 'error');
+                }
+            };
+            reader.readAsDataURL(mediaFile);
+        } else {
+            const post = {
+                title,
+                name,
+                mediaURL: null
+            };
+
+            try {
+                savePost(post);
+                addPostToDOM(post);
+                showMessage('Posted Successfully!', 'success');
+            } catch (error) {
+                showMessage('Couldn\'t save your post.', 'error');
+            }
         }
 
         postForm.reset();
@@ -66,10 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const postDiv = document.createElement('div');
         postDiv.classList.add('post');
 
+        let mediaElement = '';
+        if (post.mediaURL) {
+            if (post.mediaURL.startsWith('data:image')) {
+                mediaElement = `<img src="${post.mediaURL}" alt="media">`;
+            } else if (post.mediaURL.startsWith('data:video')) {
+                mediaElement = `<video src="${post.mediaURL}" controls></video>`;
+            } else if (post.mediaURL.endsWith('.gif')) {
+                mediaElement = `<img src="${post.mediaURL}" alt="media">`;
+            }
+        }
+
         postDiv.innerHTML = `
             <h2>${post.title}</h2>
             <p>Posted by: ${post.name}</p>
-            ${post.media ? `<video src="${post.media}" controls></video>` : ''}
+            ${mediaElement}
         `;
 
         postsDiv.appendChild(postDiv);
