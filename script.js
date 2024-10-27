@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsBtn = document.querySelector('.settings');
     const body = document.body;
 
-    // Load existing posts from local storage
     loadPosts();
 
     postForm.addEventListener('submit', (e) => {
@@ -12,12 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const title = document.getElementById('title').value;
         const name = document.getElementById('name').value;
-        const media = document.getElementById('media').files[0];
+        const media = document.getElementById('media').value;
 
         const post = {
             title,
             name,
-            media: media ? URL.createObjectURL(media) : null,
+            media
         };
 
         savePost(post);
@@ -48,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         postDiv.innerHTML = `
             <h2>${post.title}</h2>
             <p>Posted by: ${post.name}</p>
-            ${post.media ? `<img src="${post.media}" alt="media">` : ''}
+            ${post.media ? `<video src="${post.media}" controls></video>` : ''}
         `;
 
         postsDiv.appendChild(postDiv);
