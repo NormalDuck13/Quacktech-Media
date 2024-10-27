@@ -26,6 +26,9 @@ document.getElementById('postForm').addEventListener('submit', function(event) {
             const video = document.createElement('video');
             video.src = e.target.result;
             video.controls = true;
+            video.addEventListener('click', function() {
+                window.location.href = `video.html?src=${encodeURIComponent(video.src)}`;
+            });
             post.appendChild(video);
         }
 
