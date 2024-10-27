@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Social Media Platform</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Social Media Platform</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Post Your Content</h1>
-        <form id="postForm">
-            <input type="text" id="name" placeholder="Your Name" required>
-            <input type="text" id="title" placeholder="Title" required>
-            <input type="file" id="media" accept="image/*,video/*" required>
-            <button type="submit">Post</button>
-        </form>
-        <div id="posts"></div>
-    </div>
-    <script src="script.js"></script>
+    <h1>Post Something!</h1>
+    <form action="/post" method="POST" enctype="multipart/form-data">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="media">Media (optional):</label><br>
+        <input type="file" id="media" name="media"><br><br>
+        <input type="submit" value="Post">
+    </form>
 </body>
 </html>
