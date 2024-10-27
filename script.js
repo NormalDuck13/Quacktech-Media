@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsBtn = document.querySelector('.settings');
     const body = document.body;
 
-    // Load existing posts
-    fetchPosts();
+    // Load existing posts from local storage
+    loadPosts();
 
     postForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -30,22 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('dark-mode');
     });
 
-    function fetchPosts() {
-        // Load posts from JSON files (for simplicity, this is a mock)
-        // In a real app, you'd fetch from a server or local storage
-        const mockPosts = [
-            { title: 'First Post', name: 'User1', media: null },
-            { title: 'Second Post', name: 'User2', media: null }
-        ];
-
-        mockPosts.forEach(post => {
-            addPostToDOM(post);
-        });
+    function loadPosts() {
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
+        posts.forEach(post => addPostToDOM(post));
     }
 
     function savePost(post) {
-        // Save post to local storage or server (mock function)
-        console.log('Post saved:', post);
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
+        posts.push(post);
+        localStorage.setItem('posts', JSON.stringify(posts));
     }
 
     function addPostToDOM(post) {
