@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsBtn = document.querySelector('.settings');
     const body = document.body;
     const messageDiv = document.getElementById('message');
+    const searchInput = document.getElementById('search');
 
     loadPosts();
 
@@ -23,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             savePost(post);
             addPostToDOM(post);
-            savePostToHtml(post);
 
             showMessage('Posted Successfully!', 'success');
         } catch (error) {
@@ -37,6 +37,20 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.toggle('dark-mode');
     });
 
+    searchInput.addEventListener('input', () => {
+        const searchQuery = searchInput.value.toLowerCase();
+        const posts = document.querySelectorAll('.post');
+        posts.forEach(post => {
+            const title = post.querySelector('h2').innerText.toLowerCase();
+            const name = post.querySelector('p').innerText.toLowerCase();
+            if (title.includes(searchQuery) || name.includes(searchQuery)) {
+                post.style.display = '';
+            } else {
+                post.style.display = 'none';
+            }
+        });
+    });
+
     function loadPosts() {
         const posts = JSON.parse(localStorage.getItem('posts')) || [];
         posts.forEach(post => addPostToDOM(post));
@@ -46,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const posts = JSON.parse(localStorage.getItem('posts')) || [];
         posts.push(post);
         localStorage.setItem('posts', JSON.stringify(posts));
-        localStorage.setItem('savedPost', JSON.stringify(post));
     }
 
     function addPostToDOM(post) {
@@ -60,38 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         postsDiv.appendChild(postDiv);
-    }
-
-    function savePostToHtml(post) {
-        const postHtml = `
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" href="styles.css">
-                <title>${post.title}</title>
-            </head>
-            <body>
-                <header>
-                    <h1>${post.title}</h1>
-                    <div class="settings">⚙️ Settings</div>
-                </header>
-                <div class="container">
-                    <p>Posted by: ${post.name}</p>
-                    ${post.media ? `<video src="${post.media}" controls></video>` : ''}
-                </div>
-            </body>
-            </html>
-        `;
-
-        const blob = new Blob([postHtml], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${post.title.replace(/ /g, '_')}.html`;
-        a.click();
     }
 
     function showMessage(message, type) {
