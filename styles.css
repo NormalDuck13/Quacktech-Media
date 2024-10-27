@@ -1,20 +1,3 @@
-/* existing styles */
-#message {
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-.success {
-    color: green;
-}
-
-.error {
-    color: red;
-}
-
-/* rest of your styles */
-
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -62,6 +45,30 @@ button {
     border: none;
     padding: 10px;
     cursor: pointer;
+}
+
+#message {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+.drop-zone {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.drop-zone.dragover {
+    border-color: #333;
 }
 
 .dark-mode {
