@@ -1,22 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles.css">
-    <title><%= title %></title>
-</head>
-<body>
-    <header>
-        <h1><%= title %></h1>
-        <div class="settings">⚙️ Settings</div>
-    </header>
-    <div class="container">
-        <p>Posted by: <%= name %></p>
-        <% if (media) { %>
-            <img src="/uploads/<%= media %>" alt="media">
-        <% } %>
-    </div>
-    <script src="/script.js"></script>
-</body>
-</html>
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+
+const app = express();
+const upload = multer({ dest: 'uploads/' });
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
+app.get('/', (req, res) => {
+    res.render('index');
+});
+
+app.post('/post', upload.single('media'), (req, res) => {
+    const { title, name } = req.body;
+    const media = req.file ? req.file.filename : null;
+
+    res.render('post', { title, name, media });
+});
+
+app.listen(3000, () => {
+    console.log('Server running on port 3000');
+});
