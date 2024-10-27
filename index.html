@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Social Media Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Post Your Content</h1>
+        <form id="postForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="text" id="title" placeholder="Title" required>
+            <input type="file" id="media" accept="image/*,video/*" required>
+            <button type="submit">Post</button>
+        </form>
+        <div id="posts"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
