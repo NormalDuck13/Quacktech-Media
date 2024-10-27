@@ -1,3 +1,20 @@
+/* existing styles */
+#message {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+/* rest of your styles */
+
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
