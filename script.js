@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
         savePost(post);
         addPostToDOM(post);
 
+        // Also save the post to a separate HTML file
+        savePostToHtml(post);
+
         postForm.reset();
     });
 
@@ -38,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const posts = JSON.parse(localStorage.getItem('posts')) || [];
         posts.push(post);
         localStorage.setItem('posts', JSON.stringify(posts));
+        localStorage.setItem('savedPost', JSON.stringify(post)); // Save the post to localStorage
     }
 
     function addPostToDOM(post) {
@@ -51,5 +55,38 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         postsDiv.appendChild(postDiv);
+    }
+
+    function savePostToHtml(post) {
+        const postHtml = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="styles.css">
+                <title>${post.title}</title>
+            </head>
+            <body>
+                <header>
+                    <h1>${post.title}</h1>
+                    <div class="settings">⚙️ Settings</div>
+                </header>
+                <div class="container">
+                    <p>Posted by: ${post.name}</p>
+                    ${post.media ? `<video src="${post.media}" controls></video>` : ''}
+                </div>
+            </body>
+            </html>
+        `;
+
+        const blob = new Blob([postHtml], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+
+        // Save the file locally
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${post.title.replace(/ /g, '_')}.html`;
+        a.click();
     }
 });
