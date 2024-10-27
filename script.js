@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const postsDiv = document.getElementById('posts');
     const settingsBtn = document.querySelector('.settings');
     const body = document.body;
+    const messageDiv = document.getElementById('message');
 
     loadPosts();
 
@@ -19,11 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
             media
         };
 
-        savePost(post);
-        addPostToDOM(post);
+        try {
+            savePost(post);
+            addPostToDOM(post);
+            savePostToHtml(post);
 
-        // Also save the post to a separate HTML file
-        savePostToHtml(post);
+            showMessage('Posted Successfully!', 'success');
+        } catch (error) {
+            showMessage('Couldn\'t save your post.', 'error');
+        }
 
         postForm.reset();
     });
@@ -41,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const posts = JSON.parse(localStorage.getItem('posts')) || [];
         posts.push(post);
         localStorage.setItem('posts', JSON.stringify(posts));
-        localStorage.setItem('savedPost', JSON.stringify(post)); // Save the post to localStorage
+        localStorage.setItem('savedPost', JSON.stringify(post));
     }
 
     function addPostToDOM(post) {
@@ -83,10 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const blob = new Blob([postHtml], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
 
-        // Save the file locally
         const a = document.createElement('a');
         a.href = url;
         a.download = `${post.title.replace(/ /g, '_')}.html`;
         a.click();
+    }
+
+    function showMessage(message, type) {
+        messageDiv.textContent = message;
+        messageDiv.className = type;
     }
 });
