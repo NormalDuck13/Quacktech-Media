@@ -18,7 +18,10 @@
             <label for="name">Name:</label><br>
             <input type="text" id="name" name="name" required><br>
             <label for="media">Media (optional):</label><br>
-            <input type="file" id="media" name="media" accept="image/*,video/*,.gif"><br><br>
+            <div id="dropZone" class="drop-zone">
+                <p>Drag & drop a file here or click to select a file</p>
+                <input type="file" id="media" name="media" accept="image/*,video/*,.gif" hidden>
+            </div><br>
             <button type="submit">Post</button>
         </form>
         <div id="message"></div>
