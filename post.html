@@ -7,10 +7,16 @@
     <title><%= title %></title>
 </head>
 <body>
-    <h1><%= title %></h1>
-    <p>Posted by: <%= name %></p>
-    <% if (media) { %>
-        <img src="/uploads/<%= media %>" alt="media">
-    <% } %>
+    <header>
+        <h1><%= title %></h1>
+        <div class="settings">⚙️ Settings</div>
+    </header>
+    <div class="container">
+        <p>Posted by: <%= name %></p>
+        <% if (media) { %>
+            <img src="/uploads/<%= media %>" alt="media">
+        <% } %>
+    </div>
+    <script src="/script.js"></script>
 </body>
 </html>
