@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             savePost(post);
             addPostToDOM(post);
-
             showMessage('Posted Successfully!', 'success');
         } catch (error) {
             showMessage('Couldn\'t save your post.', 'error');
@@ -80,3 +79,4 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.className = type;
     }
 });
+
