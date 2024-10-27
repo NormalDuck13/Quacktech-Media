@@ -20,6 +20,8 @@ app.post('/post', upload.single('media'), (req, res) => {
     const { title, name } = req.body;
     const media = req.file ? req.file.filename : null;
 
+    console.log(`Title: ${title}, Name: ${name}, Media: ${media}`); // Log received data
+
     res.render('post', { title, name, media });
 });
 
